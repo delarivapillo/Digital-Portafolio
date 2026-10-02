@@ -1,1473 +1,1168 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
- <meta charset="UTF-8">
- <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
- <title>Jorge De la Riva | Aerospace Engineering + Artificial Intelligence</title>
-
- <style>
- * {
- margin: 0;
- padding: 0;
- box-sizing: border-box;
- }
-
- html {
- scroll-behavior: smooth;
- }
-
- body {
- font-family: Arial, Helvetica, sans-serif;
- background: #080b10;
- color: #f2f5f7;
- line-height: 1.7;
- font-size: 17px;
- }
-
- :root {
- --bg: #080b10;
- --bg2: #0d1219;
- --card: #111821;
- --card2: #151e29;
- --text: #f2f5f7;
- --muted: #aab5c2;
- --cyan: #00e5ff;
- --cyan-dark: #00a9bd;
- --magenta: #ff3cac;
- --border: rgba(0, 229, 255, 0.18);
- --white-border: rgba(255,255,255,0.08);
- }
-
- /* Drop Cap Styling */
- .section-title::first-letter,
- .hero-description::first-letter,
- .section-intro::first-letter,
- .about-text p:first-of-type::first-letter {
- font-size: 1.45em;
- font-weight: bold;
- color: var(--cyan);
- }
-
- /* Image Container General Utilities */
- .card-image {
- width: 100%;
- height: 200px;
- overflow: hidden;
- border-bottom: 1px solid var(--white-border);
- margin-bottom: 20px;
- background: #151e29;
- }
-
- .card-image img {
- width: 100%;
- height: 100%;
- object-fit: cover;
- transition: transform 0.4s ease;
- }
-
- .project-card:hover .card-image img {
- transform: scale(1.05);
- }
-
- .section-banner-img {
- width: 100%;
- max-height: 320px;
- object-fit: cover;
- border: 1px solid var(--white-border);
- margin-bottom: 30px;
- display: block;
- }
-
- /* Navigation */
- nav {
- position: fixed;
- top: 0;
- left: 0;
- width: 100%;
- height: 76px;
- display: flex;
- align-items: center;
- justify-content: space-between;
- padding: 0 6%;
- background: rgba(8, 11, 16, 0.88);
- backdrop-filter: blur(15px);
- border-bottom: 1px solid var(--white-border);
- z-index: 1000;
- }
-
- .logo {
- font-size: 22px;
- font-weight: 800;
- letter-spacing: 1px;
- }
-
- .logo span {
- color: var(--cyan);
- }
-
- nav ul {
- display: flex;
- list-style: none;
- gap: 28px;
- }
-
- nav ul li a {
- color: var(--muted);
- text-decoration: none;
- font-size: 15px;
- font-weight: 700;
- letter-spacing: 1px;
- transition: 0.3s;
- }
-
- nav ul li a:hover {
- color: var(--cyan);
- }
-
- .menu-toggle {
- display: none;
- font-size: 28px;
- cursor: pointer;
- color: var(--cyan);
- }
-
- /* Hero Section */
- .hero {
- min-height: 100vh;
- display: flex;
- align-items: center;
- position: relative;
- overflow: hidden;
- padding: 140px 8% 90px;
- background:
- radial-gradient(
- circle at 80% 20%,
- rgba(0,229,255,0.09),
- transparent 35%
- ),
- radial-gradient(
- circle at 20% 80%,
- rgba(255,60,172,0.06),
- transparent 30%
- ),
- var(--bg);
- }
-
- .grid-background {
- position: absolute;
- inset: 0;
- opacity: 0.11;
- background-image:
- linear-gradient(
- rgba(0,229,255,0.25) 1px,
- transparent 1px
- ),
- linear-gradient(
- 90deg,
- rgba(0,229,255,0.25) 1px,
- transparent 1px
- );
- background-size: 55px 55px;
- pointer-events: none;
- }
-
- .hero-container {
- display: grid;
- grid-template-columns: 1.2fr 0.8fr;
- gap: 50px;
- align-items: center;
- max-width: 1200px;
- position: relative;
- z-index: 2;
- width: 100%;
- }
-
- .hero-content {
- max-width: 100%;
- }
-
- .hero-image-wrapper {
- text-align: center;
- position: relative;
- }
-
- .hero-image-wrapper img {
- width: 100%;
- max-width: 360px;
- height: auto;
- border-radius: 8px;
- border: 2px solid var(--border);
- box-shadow: 0 0 30px rgba(0, 229, 255, 0.15);
- }
-
- .hero-kicker {
- color: var(--cyan);
- font-size: 15px;
- font-weight: 800;
- letter-spacing: 4px;
- margin-bottom: 24px;
- }
-
- .hero h1 {
- font-size: clamp(48px, 6.5vw, 90px);
- line-height: 0.98;
- letter-spacing: -4px;
- margin-bottom: 30px;
- }
-
- .hero h1 span {
- color: var(--cyan);
- }
-
- .hero-description {
- color: var(--muted);
- max-width: 850px;
- font-size: 20px;
- line-height: 1.8;
- margin-bottom: 38px;
- }
-
- .hero-buttons {
- display: flex;
- flex-wrap: wrap;
- gap: 15px;
- }
-
- .btn {
- display: inline-block;
- text-decoration: none;
- padding: 15px 25px;
- border-radius: 5px;
- font-size: 15px;
- font-weight: 800;
- letter-spacing: 1px;
- transition: 0.3s;
- }
-
- .btn-primary {
- background: var(--cyan);
- color: #061016;
- }
-
- .btn-primary:hover {
- transform: translateY(-3px);
- box-shadow: 0 10px 30px rgba(0,229,255,0.2);
- }
-
- .btn-secondary {
- border: 1px solid var(--border);
- color: var(--text);
- background: rgba(255,255,255,0.02);
- }
-
- .btn-secondary:hover {
- border-color: var(--cyan);
- color: var(--cyan);
- }
-
- .hero-tags {
- display: flex;
- flex-wrap: wrap;
- gap: 10px;
- margin-top: 45px;
- }
-
- .tag {
- padding: 8px 14px;
- border: 1px solid var(--border);
- color: var(--muted);
- font-size: 12px;
- letter-spacing: 1.5px;
- font-weight: 700;
- background: rgba(0,229,255,0.02);
- }
-
- /* General Sections */
- section {
- padding: 110px 8%;
- border-top: 1px solid var(--white-border);
- }
-
- .section-number {
- color: var(--cyan);
- font-size: 13px;
- letter-spacing: 3px;
- font-weight: 800;
- margin-bottom: 10px;
- }
-
- .section-title {
- font-size: clamp(38px, 5vw, 62px);
- line-height: 1;
- letter-spacing: -2px;
- margin-bottom: 25px;
- }
-
- .section-intro {
- color: var(--muted);
- max-width: 780px;
- font-size: 17px;
- line-height: 1.8;
- margin-bottom: 55px;
- }
-
- /* About */
- .about-grid {
- display: grid;
- grid-template-columns: 1.2fr 0.8fr;
- gap: 70px;
- align-items: start;
- }
-
- .about-text p {
- color: var(--muted);
- margin-bottom: 22px;
- font-size: 17px;
- }
-
- .about-text strong {
- color: var(--text);
- }
-
- .profile-card {
- background: var(--card);
- border: 1px solid var(--white-border);
- padding: 30px;
- position: relative;
- }
-
- .profile-card::before {
- content: "";
- position: absolute;
- top: 0;
- left: 0;
- width: 4px;
- height: 100%;
- background: var(--cyan);
- }
-
- .profile-card h3 {
- font-size: 18px;
- margin-bottom: 25px;
- }
-
- .profile-row {
- display: flex;
- justify-content: space-between;
- gap: 20px;
- padding: 15px 0;
- border-bottom: 1px solid var(--white-border);
- }
-
- .profile-row:last-child {
- border-bottom: none;
- }
-
- .profile-label {
- color: var(--muted);
- font-size: 14px;
- }
-
- .profile-value {
- text-align: right;
- font-weight: 700;
- font-size: 15px;
- }
-
- /* Projects */
- .projects-grid {
- display: grid;
- grid-template-columns: repeat(2, 1fr);
- gap: 22px;
- }
-
- .project-card {
- background: var(--card);
- border: 1px solid var(--white-border);
- padding: 0 0 32px 0;
- transition: 0.35s;
- position: relative;
- overflow: hidden;
- }
-
- .project-card-body {
- padding: 0 32px;
- }
-
- .project-card:hover {
- transform: translateY(-5px);
- border-color: var(--cyan);
- }
-
- .project-card::after {
- content: "";
- position: absolute;
- width: 100px;
- height: 100px;
- right: -40px;
- bottom: -40px;
- border: 1px solid rgba(0,229,255,0.15);
- transform: rotate(45deg);
- pointer-events: none;
- }
-
- .project-number {
- color: var(--cyan);
- font-size: 13px;
- letter-spacing: 2px;
- font-weight: 800;
- margin-bottom: 15px;
- }
-
- .project-card h3 {
- font-size: 22px;
- margin-bottom: 15px;
- }
-
- .project-card p {
- color: var(--muted);
- font-size: 15px;
- line-height: 1.8;
- margin-bottom: 22px;
- }
-
- .project-tech {
- display: flex;
- flex-wrap: wrap;
- gap: 8px;
- }
-
- .project-tech span {
- border: 1px solid var(--white-border);
- padding: 6px 10px;
- font-size: 11px;
- color: var(--muted);
- letter-spacing: 0.7px;
- }
-
- /* Skills */
- .skills-grid {
- display: grid;
- grid-template-columns: repeat(3, 1fr);
- gap: 20px;
- }
-
- .skill-card {
- padding: 30px;
- background: var(--card);
- border: 1px solid var(--white-border);
- }
-
- .skill-icon-img {
- width: 50px;
- height: 50px;
- object-fit: contain;
- margin-bottom: 15px;
- }
-
- .skill-card h3 {
- font-size: 19px;
- margin-bottom: 15px;
- color: var(--cyan);
- }
-
- .skill-card p {
- color: var(--muted);
- font-size: 14px;
- line-height: 1.8;
- }
-
- /* Experience */
- .timeline {
- max-width: 1000px;
- }
-
- .timeline-item {
- display: grid;
- grid-template-columns: 180px 1fr;
- gap: 40px;
- padding: 35px 0;
- border-bottom: 1px solid var(--white-border);
- }
-
- .timeline-date {
- color: var(--cyan);
- font-size: 13px;
- font-weight: 800;
- letter-spacing: 1px;
- }
-
- .timeline-content h3 {
- font-size: 21px;
- margin-bottom: 6px;
- }
-
- .timeline-content h4 {
- color: var(--muted);
- font-size: 14px;
- font-weight: 500;
- margin-bottom: 15px;
- }
-
- .timeline-content p {
- color: var(--muted);
- font-size: 15px;
- line-height: 1.8;
- }
-
- .timeline-img {
- width: 100%;
- max-height: 200px;
- object-fit: cover;
- margin-bottom: 15px;
- border: 1px solid var(--white-border);
- }
-
- /* Certifications */
- .cert-grid {
- display: grid;
- grid-template-columns: repeat(3, 1fr);
- gap: 20px;
- }
-
- .cert-card {
- background: var(--card);
- border: 1px solid var(--white-border);
- padding: 35px;
- text-align: center;
- }
-
- .cert-icon-img {
- width: 60px;
- height: 60px;
- object-fit: contain;
- margin: 0 auto 15px;
- display: block;
- }
-
- .cert-card h3 {
- font-size: 19px;
- margin-bottom: 10px;
- }
-
- .cert-card p {
- color: var(--muted);
- font-size: 14px;
- }
-
- /* Languages */
- .languages {
- max-width: 850px;
- }
-
- .language {
- margin-bottom: 25px;
- }
-
- .language-top {
- display: flex;
- justify-content: space-between;
- margin-bottom: 8px;
- }
-
- .language-name {
- font-weight: 700;
- font-size: 15px;
- }
-
- .language-level {
- color: var(--muted);
- font-size: 13px;
- }
-
- .language-bar {
- width: 100%;
- height: 5px;
- background: #1a222c;
- }
-
- .language-fill {
- height: 100%;
- background: var(--cyan);
- }
-
- .spanish { width: 100%; }
- .english { width: 90%; }
- .french { width: 60%; }
- .japanese { width: 30%; }
-
- /* Future Direction */
- .future {
- background:
- radial-gradient(
- circle at 20% 50%,
- rgba(0,229,255,0.07),
- transparent 30%
- ),
- var(--bg2);
- }
-
- .future-content {
- max-width: 900px;
- }
-
- .future-content h3 {
- font-size: 32px;
- margin-bottom: 25px;
- }
-
- .future-content p {
- color: var(--muted);
- font-size: 18px;
- line-height: 1.9;
- margin-bottom: 35px;
- }
-
- .future-list {
- display: grid;
- grid-template-columns: repeat(2, 1fr);
- gap: 12px;
- }
-
- .future-list div {
- border-left: 2px solid var(--cyan);
- padding: 13px 18px;
- background: rgba(0,229,255,0.025);
- font-size: 15px;
- }
-
- /* Contact */
- .contact {
- text-align: center;
- padding-bottom: 80px;
- }
-
- .contact-content {
- max-width: 800px;
- margin: auto;
- }
-
- .contact-content p {
- color: var(--muted);
- font-size: 18px;
- margin-bottom: 35px;
- }
-
- .contact-links {
- display: flex;
- justify-content: center;
- flex-wrap: wrap;
- gap: 15px;
- }
-
- .contact-link {
- color: var(--text);
- border: 1px solid var(--white-border);
- padding: 14px 20px;
- text-decoration: none;
- font-size: 14px;
- transition: 0.3s;
- }
-
- .contact-link:hover {
- color: var(--cyan);
- border-color: var(--cyan);
- }
-
- /* Footer */
- footer {
- border-top: 1px solid var(--white-border);
- padding: 30px 8%;
- display: flex;
- justify-content: space-between;
- align-items: center;
- color: var(--muted);
- font-size: 13px;
- }
-
- footer span {
- color: var(--cyan);
- }
-
- /* Responsive */
- @media (max-width: 1000px) {
- .hero-container {
- grid-template-columns: 1fr;
- }
-
- .about-grid {
- grid-template-columns: 1fr;
- }
-
- .skills-grid {
- grid-template-columns: repeat(2, 1fr);
- }
-
- .cert-grid {
- grid-template-columns: repeat(2, 1fr);
- }
- }
-
- @media (max-width: 750px) {
- nav {
- height: 68px;
- }
-
- nav ul {
- position: absolute;
- top: 68px;
- left: 0;
- width: 100%;
- background: #080b10;
- flex-direction: column;
- padding: 25px 8%;
- gap: 18px;
- display: none;
- border-bottom: 1px solid var(--white-border);
- }
-
- nav ul.active {
- display: flex;
- }
-
- .menu-toggle {
- display: block;
- }
-
- .hero {
- padding: 120px 7% 70px;
- }
-
- .hero h1 {
- font-size: 54px;
- letter-spacing: -2px;
- }
-
- .hero-description {
- font-size: 17px;
- }
-
- section {
- padding: 80px 7%;
- }
-
- .projects-grid {
- grid-template-columns: 1fr;
- }
-
- .skills-grid {
- grid-template-columns: 1fr;
- }
-
- .cert-grid {
- grid-template-columns: 1fr;
- }
-
- .timeline-item {
- grid-template-columns: 1fr;
- gap: 10px;
- }
-
- .future-list {
- grid-template-columns: 1fr;
- }
-
- footer {
- flex-direction: column;
- gap: 10px;
- text-align: center;
- }
- }
-
- @media (max-width: 450px) {
- .hero h1 {
- font-size: 45px;
- }
-
- .section-title {
- font-size: 38px;
- }
-
- .project-card-body,
- .skill-card,
- .cert-card {
- padding: 24px;
- }
- }
- </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jorge De la Riva | Aerospace Engineering + Artificial Intelligence</title>
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #080b10;
+      color: #f2f5f7;
+      line-height: 1.7;
+      font-size: 17px;
+    }
+
+    :root {
+      --bg: #080b10;
+      --bg2: #0d1219;
+      --card: #111821;
+      --text: #f2f5f7;
+      --muted: #aab5c2;
+      --cyan: #00e5ff;
+      --border: rgba(0, 229, 255, 0.18);
+      --white-border: rgba(255, 255, 255, 0.08);
+    }
+
+    /* Images */
+    .card-image {
+      width: 100%;
+      height: 200px;
+      overflow: hidden;
+      border-bottom: 1px solid var(--white-border);
+      margin-bottom: 20px;
+      background: #151e29;
+    }
+
+    .card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .project-card:hover .card-image img {
+      transform: scale(1.05);
+    }
+
+    .section-banner-img {
+      width: 100%;
+      max-height: 320px;
+      object-fit: cover;
+      border: 1px solid var(--white-border);
+      margin-bottom: 30px;
+      display: block;
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 6%;
+      background: rgba(8, 11, 16, 0.88);
+      backdrop-filter: blur(15px);
+      border-bottom: 1px solid var(--white-border);
+      z-index: 1000;
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+
+    .logo span {
+      color: var(--cyan);
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 28px;
+    }
+
+    nav ul li a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      transition: 0.3s;
+    }
+
+    nav ul li a:hover {
+      color: var(--cyan);
+    }
+
+    .menu-toggle {
+      display: none;
+      font-size: 28px;
+      cursor: pointer;
+      color: var(--cyan);
+    }
+
+    /* Hero Section */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding: 140px 8% 90px;
+      background: radial-gradient(circle at 80% 20%, rgba(0,229,255,0.09), transparent 35%),
+                  radial-gradient(circle at 20% 80%, rgba(255,60,172,0.06), transparent 30%),
+                  var(--bg);
+    }
+
+    .grid-background {
+      position: absolute;
+      inset: 0;
+      opacity: 0.11;
+      background-image: linear-gradient(rgba(0,229,255,0.25) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(0,229,255,0.25) 1px, transparent 1px);
+      background-size: 55px 55px;
+      pointer-events: none;
+    }
+
+    .hero-container {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 50px;
+      align-items: center;
+      max-width: 1200px;
+      position: relative;
+      z-index: 2;
+      width: 100%;
+    }
+
+    .hero-image-wrapper img {
+      width: 100%;
+      max-width: 360px;
+      height: auto;
+      border-radius: 8px;
+      border: 2px solid var(--border);
+      box-shadow: 0 0 30px rgba(0, 229, 255, 0.15);
+    }
+
+    .hero-kicker {
+      color: var(--cyan);
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 4px;
+      margin-bottom: 24px;
+    }
+
+    .hero h1 {
+      font-size: clamp(48px, 6.5vw, 90px);
+      line-height: 0.98;
+      letter-spacing: -4px;
+      margin-bottom: 30px;
+    }
+
+    .hero h1 span {
+      color: var(--cyan);
+    }
+
+    .hero-description {
+      color: var(--muted);
+      max-width: 850px;
+      font-size: 20px;
+      line-height: 1.8;
+      margin-bottom: 38px;
+    }
+
+    .first-letter {
+      font-size: 1.45em;
+      font-weight: bold;
+      color: var(--cyan);
+    }
+
+    .hero-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .btn {
+      display: inline-block;
+      text-decoration: none;
+      padding: 15px 25px;
+      border-radius: 5px;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      transition: 0.3s;
+    }
+
+    .btn-primary {
+      background: var(--cyan);
+      color: #061016;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(0,229,255,0.2);
+    }
+
+    .btn-secondary {
+      border: 1px solid var(--border);
+      color: var(--text);
+      background: rgba(255,255,255,0.02);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--cyan);
+      color: var(--cyan);
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 45px;
+    }
+
+    .tag {
+      padding: 8px 14px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: 1.5px;
+      font-weight: 700;
+      background: rgba(0,229,255,0.02);
+    }
+
+    /* General Sections */
+    section {
+      padding: 110px 8%;
+      border-top: 1px solid var(--white-border);
+    }
+
+    .section-number {
+      color: var(--cyan);
+      font-size: 13px;
+      letter-spacing: 3px;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+
+    .section-title {
+      font-size: clamp(38px, 5vw, 62px);
+      line-height: 1;
+      letter-spacing: -2px;
+      margin-bottom: 25px;
+    }
+
+    .section-intro {
+      color: var(--muted);
+      max-width: 780px;
+      font-size: 17px;
+      line-height: 1.8;
+      margin-bottom: 55px;
+    }
+
+    /* About Section */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 70px;
+      align-items: start;
+    }
+
+    .about-text p {
+      color: var(--muted);
+      margin-bottom: 22px;
+      font-size: 17px;
+    }
+
+    .about-text strong {
+      color: var(--text);
+    }
+
+    .profile-card {
+      background: var(--card);
+      border: 1px solid var(--white-border);
+      padding: 30px;
+      position: relative;
+    }
+
+    .profile-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--cyan);
+    }
+
+    .profile-card h3 {
+      font-size: 18px;
+      margin-bottom: 25px;
+    }
+
+    .profile-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 15px 0;
+      border-bottom: 1px solid var(--white-border);
+    }
+
+    .profile-row:last-child {
+      border-bottom: none;
+    }
+
+    .profile-label {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .profile-value {
+      text-align: right;
+      font-weight: 700;
+      font-size: 15px;
+    }
+
+    /* Projects Section */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 22px;
+    }
+
+    .project-card {
+      background: var(--card);
+      border: 1px solid var(--white-border);
+      padding: 0 0 32px 0;
+      transition: 0.35s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-card-body {
+      padding: 0 32px;
+    }
+
+    .project-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--cyan);
+    }
+
+    .project-number {
+      color: var(--cyan);
+      font-size: 13px;
+      letter-spacing: 2px;
+      font-weight: 800;
+      margin-bottom: 15px;
+    }
+
+    .project-card h3 {
+      font-size: 22px;
+      margin-bottom: 15px;
+    }
+
+    .project-card p {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.8;
+      margin-bottom: 22px;
+    }
+
+    .project-tech {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .project-tech span {
+      border: 1px solid var(--white-border);
+      padding: 6px 10px;
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.7px;
+    }
+
+    /* Skills Section */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .skill-card {
+      padding: 30px;
+      background: var(--card);
+      border: 1px solid var(--white-border);
+    }
+
+    .skill-icon-img {
+      width: 50px;
+      height: 50px;
+      object-fit: contain;
+      margin-bottom: 15px;
+    }
+
+    .skill-card h3 {
+      font-size: 19px;
+      margin-bottom: 15px;
+      color: var(--cyan);
+    }
+
+    .skill-card p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    /* Experience Section */
+    .timeline {
+      max-width: 1000px;
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 40px;
+      padding: 35px 0;
+      border-bottom: 1px solid var(--white-border);
+    }
+
+    .timeline-date {
+      color: var(--cyan);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+
+    .timeline-content h3 {
+      font-size: 21px;
+      margin-bottom: 6px;
+    }
+
+    .timeline-content h4 {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 15px;
+    }
+
+    .timeline-content p {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.8;
+    }
+
+    .timeline-img {
+      width: 100%;
+      max-height: 200px;
+      object-fit: cover;
+      margin-bottom: 15px;
+      border: 1px solid var(--white-border);
+    }
+
+    /* Certifications Section */
+    .cert-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .cert-card {
+      background: var(--card);
+      border: 1px solid var(--white-border);
+      padding: 35px;
+      text-align: center;
+    }
+
+    .cert-icon-img {
+      width: 60px;
+      height: 60px;
+      object-fit: contain;
+      margin: 0 auto 15px;
+      display: block;
+    }
+
+    .cert-card h3 {
+      font-size: 19px;
+      margin-bottom: 10px;
+    }
+
+    .cert-card p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    /* Languages Section */
+    .languages {
+      max-width: 850px;
+    }
+
+    .language {
+      margin-bottom: 25px;
+    }
+
+    .language-top {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .language-name {
+      font-weight: 700;
+      font-size: 15px;
+    }
+
+    .language-level {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .language-bar {
+      width: 100%;
+      height: 5px;
+      background: #1a222c;
+    }
+
+    .language-fill {
+      height: 100%;
+      background: var(--cyan);
+    }
+
+    .spanish { width: 100%; }
+    .english { width: 90%; }
+    .french { width: 60%; }
+    .japanese { width: 30%; }
+
+    /* Direction Section */
+    .future {
+      background: radial-gradient(circle at 20% 50%, rgba(0,229,255,0.07), transparent 30%), var(--bg2);
+    }
+
+    .future-content {
+      max-width: 900px;
+    }
+
+    .future-content h3 {
+      font-size: 32px;
+      margin-bottom: 25px;
+    }
+
+    .future-content p {
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.9;
+      margin-bottom: 35px;
+    }
+
+    .future-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .future-list div {
+      border-left: 2px solid var(--cyan);
+      padding: 13px 18px;
+      background: rgba(0,229,255,0.025);
+      font-size: 15px;
+    }
+
+    /* Contact Section */
+    .contact {
+      text-align: center;
+      padding-bottom: 80px;
+    }
+
+    .contact-content {
+      max-width: 800px;
+      margin: auto;
+    }
+
+    .contact-content p {
+      color: var(--muted);
+      font-size: 18px;
+      margin-bottom: 35px;
+    }
+
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .contact-link {
+      color: var(--text);
+      border: 1px solid var(--white-border);
+      padding: 14px 20px;
+      text-decoration: none;
+      font-size: 14px;
+      transition: 0.3s;
+    }
+
+    .contact-link:hover {
+      color: var(--cyan);
+      border-color: var(--cyan);
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--white-border);
+      padding: 30px 8%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    footer span {
+      color: var(--cyan);
+    }
+
+    /* Media Queries */
+    @media (max-width: 1000px) {
+      .hero-container, 
+      .about-grid {
+        grid-template-columns: 1fr;
+      }
+      .skills-grid, 
+      .cert-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 750px) {
+      nav {
+        height: 68px;
+      }
+
+      nav ul {
+        position: absolute;
+        top: 68px;
+        left: 0;
+        width: 100%;
+        background: #080b10;
+        flex-direction: column;
+        padding: 25px 8%;
+        gap: 18px;
+        display: none;
+        border-bottom: 1px solid var(--white-border);
+      }
+
+      nav ul.active {
+        display: flex;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+
+      .hero {
+        padding: 120px 7% 70px;
+      }
+
+      .hero h1 {
+        font-size: 54px;
+        letter-spacing: -2px;
+      }
+
+      .hero-description {
+        font-size: 17px;
+      }
+
+      section {
+        padding: 80px 7%;
+      }
+
+      .projects-grid, 
+      .skills-grid, 
+      .cert-grid, 
+      .timeline-item, 
+      .future-list {
+        grid-template-columns: 1fr;
+      }
+
+      footer {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 450px) {
+      .hero h1 {
+        font-size: 45px;
+      }
+
+      .section-title {
+        font-size: 38px;
+      }
+
+      .project-card-body, 
+      .skill-card, 
+      .cert-card {
+        padding: 24px;
+      }
+    }
+  </style>
 </head>
-
 <body>
 
- <!-- NAVIGATION -->
- <nav>
- <div class="logo">
- JORGE<span>.</span>
- </div>
-
- <div class="menu-toggle" onclick="toggleMenu()">
- ☰
- </div>
-
- <ul id="navMenu">
- <li><a href="#about">ABOUT</a></li>
- <li><a href="#projects">PROJECTS</a></li>
- <li><a href="#skills">SKILLS</a></li>
- <li><a href="#experience">EXPERIENCE</a></li>
- <li><a href="#certifications">CERTIFICATIONS</a></li>
- <li><a href="#languages">LANGUAGES</a></li>
- <li><a href="#contact">CONTACT</a></li>
- </ul>
- </nav>
-
-
- <!-- HERO -->
- <header class="hero">
- <div class="grid-background"></div>
-
- <div class="hero-container">
- <div class="hero-content">
- <div class="hero-kicker">
- AEROSPACE AND AERONAUTICAL ENGINEERING ·
- ARTIFICIAL INTELLIGENCE ENGINEERING ·
- TECHNOLOGY · FABRICATION
- </div>
-
- <h1>
- Turning ideas<br>
- into <span>real systems.</span>
- </h1>
-
- <p class="hero-description">
- I'm Jorge De la Riva, a dual-major student at
- The University of Texas at El Paso studying
- <strong>Aerospace and Aeronautical Engineering</strong>
- and
- <strong>Artificial Intelligence Engineering</strong>.
- I'm passionate about aerospace technology, robotics,
- autonomous systems, programming, digital fabrication,
- and building things that solve real problems.
- </p>
-
- <div class="hero-buttons">
- <a href="#projects" class="btn btn-primary">
- VIEW MY PROJECTS
- </a>
- <a href="#contact" class="btn btn-secondary">
- CONTACT ME
- </a>
- </div>
-
- <div class="hero-tags">
- <div class="tag">AEROSPACE</div>
- <div class="tag">ARTIFICIAL INTELLIGENCE</div>
- <div class="tag">ROBOTICS</div>
- <div class="tag">3D PRINTING</div>
- <div class="tag">PROGRAMMING</div>
- <div class="tag">GAIA</div>
- </div>
- </div>
-
- <div class="hero-image-wrapper">
- <img src="images/profile.jpg" alt="Jorge De la Riva">
- </div>
- </div>
- </header>
-
-
- <!-- ABOUT -->
- <section id="about">
- <div class="section-number">
- 01 / ABOUT ME
- </div>
-
- <h2 class="section-title">
- Engineering with<br>
- curiosity.
- </h2>
-
- <img src="images/about-utep.jpg" alt="UTEP Engineering Lab" class="section-banner-img">
-
- <div class="about-grid">
- <div class="about-text">
- <p>
- I am a student at
- <strong>
- The University of Texas at El Paso (UTEP)
- </strong>
- pursuing a dual major in
- <strong>
- Aerospace and Aeronautical Engineering
- and Artificial Intelligence Engineering
- </strong>.
- </p>
-
- <p>
- My interests sit at the intersection of engineering,
- technology, programming, artificial intelligence,
- robotics, and advanced manufacturing.
- </p>
-
- <p>
- I enjoy taking an idea and figuring out how to turn it
- into something tangible. Whether that means writing code,
- designing a part, troubleshooting a technical system,
- working with a 3D printer, or analyzing an engineering
- problem, I like learning by building.
- </p>
-
- <p>
- My long-term interests include
- <strong>
- space exploration, aerospace systems,
- robotics, autonomous systems, launch vehicles,
- and advanced engineering technologies.
- </strong>
- </p>
- </div>
-
- <div class="profile-card">
- <h3>QUICK PROFILE</h3>
-
- <div class="profile-row">
- <span class="profile-label">University</span>
- <span class="profile-value">University of Texas at El Paso (UTEP)</span>
- </div>
-
- <div class="profile-row">
- <span class="profile-label">Major</span>
- <span class="profile-value">Aerospace & Aeronautical Engineering</span>
- </div>
-
- <div class="profile-row">
- <span class="profile-label">Major</span>
- <span class="profile-value">Artificial Intelligence Engineering</span>
- </div>
-
- <div class="profile-row">
- <span class="profile-label">Classification</span>
- <span class="profile-value">Sophomore</span>
- </div>
-
- <div class="profile-row">
- <span class="profile-label">GPA</span>
- <span class="profile-value">3.76</span>
- </div>
-
- <div class="profile-row">
- <span class="profile-label">Languages</span>
- <span class="profile-value">4</span>
- </div>
-
- <div class="profile-row">
- <span class="profile-label">Focus</span>
- <span class="profile-value">Aerospace + AI</span>
- </div>
- </div>
- </div>
- </section>
-
-
- <!-- PROJECTS -->
- <section id="projects">
- <div class="section-number">
- 02 / PROJECTS
- </div>
-
- <h2 class="section-title">
- Things I've<br>
- built.
- </h2>
-
- <p class="section-intro">
- My projects combine engineering analysis, programming,
- fabrication, design, and problem solving. Each project
- represents another step in learning how to turn concepts
- into working systems.
- </p>
-
- <div class="projects-grid">
- <!-- PROJECT 01 -->
- <div class="project-card">
- <div class="card-image">
- <img src="images/project-fea.jpg" alt="Aerospace Materials Analysis">
- </div>
- <div class="project-card-body">
- <div class="project-number">PROJECT 01</div>
- <h3>Aerospace Materials Analysis</h3>
- <p>
- Engineering work involving aerospace materials,
- finite element analysis, thermal analysis, symmetry,
- and fracture testing. The work included analyzing
- specimens made from aluminum, brass, and steel.
- </p>
- <div class="project-tech">
- <span>FEA</span>
- <span>THERMAL ANALYSIS</span>
- <span>MATERIALS</span>
- <span>AEROSPACE</span>
- </div>
- </div>
- </div>
-
- <!-- PROJECT 02 -->
- <div class="project-card">
- <div class="card-image">
- <img src="images/project-3dprint.jpg" alt="3D Printing & Fabrication">
- </div>
- <div class="project-card-body">
- <div class="project-number">PROJECT 02</div>
- <h3>3D Printing & Fabrication</h3>
- <p>
- Hands-on experience designing and producing physical
- objects using additive manufacturing. Experience
- includes preparing STL files, generating G-code,
- troubleshooting prints, and operating Bambu Lab equipment.
- </p>
- <div class="project-tech">
- <span>3D PRINTING</span>
- <span>BAMBU LAB</span>
- <span>G-CODE</span>
- <span>STL</span>
- </div>
- </div>
- </div>
-
- <!-- PROJECT 03 -->
- <div class="project-card">
- <div class="card-image">
- <img src="images/project-cnc.jpg" alt="CAD, CNC & Digital Manufacturing">
- </div>
- <div class="project-card-body">
- <div class="project-number">PROJECT 03</div>
- <h3>CAD, CNC & Digital Manufacturing</h3>
- <p>
- Digital manufacturing projects involving Fusion,
- CNC workflows, laser engraving, and physical
- prototyping. The goal is to connect digital design
- with real-world manufacturing.
- </p>
- <div class="project-tech">
- <span>FUSION</span>
- <span>CNC</span>
- <span>CAD</span>
- <span>FABRICATION</span>
- </div>
- </div>
- </div>
-
- <!-- PROJECT 04 -->
- <div class="project-card">
- <div class="card-image">
- <img src="images/project-pokeminer.jpg" alt="Poke-Miner Game">
- </div>
- <div class="project-card-body">
- <div class="project-number">PROJECT 04</div>
- <h3>Poke-Miner</h3>
- <p>
- A Java-based game and simulation project involving
- Pokémon data, trainers, wild Pokémon, maps, catching
- mechanics, battle simulation, and evolution data.
- </p>
- <div class="project-tech">
- <span>JAVA</span>
- <span>GAME LOGIC</span>
- <span>ARRAYS</span>
- <span>SIMULATION</span>
- </div>
- </div>
- </div>
-
- <!-- PROJECT 05 -->
- <div class="project-card">
- <div class="card-image">
- <img src="images/project-minesweeper.jpg" alt="Minesweeper & 2048">
- </div>
- <div class="project-card-body">
- <div class="project-number">PROJECT 05</div>
- <h3>Minesweeper & 2048</h3>
- <p>
- Console-based Java projects developed to practice
- programming logic, arrays, user input, movement systems,
- game mechanics, and number manipulation.
- </p>
- <div class="project-tech">
- <span>JAVA</span>
- <span>ALGORITHMS</span>
- <span>ARRAYS</span>
- <span>GAME DEVELOPMENT</span>
- </div>
- </div>
- </div>
-
- <!-- PROJECT 06 -->
- <div class="project-card">
- <div class="card-image">
- <img src="images/project-flowfree.jpg" alt="Flow Free Pygame">
- </div>
- <div class="project-card-body">
- <div class="project-number">PROJECT 06</div>
- <h3>Flow Free — Pygame</h3>
- <p>
- A Python/Pygame project focused on grid-based gameplay,
- colored paths, level design, interface development,
- and interactive game mechanics.
- </p>
- <div class="project-tech">
- <span>PYTHON</span>
- <span>PYGAME</span>
- <span>UI</span>
- <span>GAME LOGIC</span>
- </div>
- </div>
- </div>
- </div>
- </section>
-
-
- <!-- SKILLS -->
- <section id="skills">
- <div class="section-number">
- 03 / SKILLS
- </div>
-
- <h2 class="section-title">
- What I<br>
- work with.
- </h2>
-
- <p class="section-intro">
- A combination of engineering knowledge, programming,
- manufacturing, technical support, and creative technology.
- </p>
-
- <div class="skills-grid">
- <div class="skill-card">
- <img src="images/icon-aerospace.png" alt="Aerospace" class="skill-icon-img">
- <h3>Aerospace & Engineering</h3>
- <p>
- Aerospace engineering fundamentals, materials,
- finite element analysis, thermal analysis,
- engineering problem solving, and technical
- documentation.
- </p>
- </div>
-
- <div class="skill-card">
- <img src="images/icon-ai.png" alt="Artificial Intelligence" class="skill-icon-img">
- <h3>Artificial Intelligence</h3>
- <p>
- Artificial intelligence foundations, computational
- problem solving, programming, algorithms, and interest
- in machine learning and autonomous systems.
- </p>
- </div>
-
- <div class="skill-card">
- <img src="images/icon-code.png" alt="Programming" class="skill-icon-img">
- <h3>Programming</h3>
- <p>
- Java, Python, Pygame, arrays, algorithms, game logic,
- simulations, object-oriented programming concepts,
- and problem solving.
- </p>
- </div>
-
- <div class="skill-card">
- <img src="images/icon-fab.png" alt="Digital Fabrication" class="skill-icon-img">
- <h3>Digital Fabrication</h3>
- <p>
- 3D printing, Bambu Lab systems, STL preparation,
- G-code, Fusion, CNC, laser engraving, and prototyping.
- </p>
- </div>
-
- <div class="skill-card">
- <img src="images/icon-support.png" alt="Technical Support" class="skill-icon-img">
- <h3>Technical Support</h3>
- <p>
- PC troubleshooting, AV systems, Extron, GVE,
- Toolbelt, GUI systems, GCP, cable connections,
- classroom technology, and basic system programming.
- </p>
- </div>
-
- <div class="skill-card">
- <img src="images/icon-creative.png" alt="Creative Technology" class="skill-icon-img">
- <h3>Creative Technology</h3>
- <p>
- GIMP, Canva, Clipchamp, digital design,
- 3D modeling, prototyping, and transforming
- concepts into physical or digital projects.
- </p>
- </div>
- </div>
- </section>
-
-
- <!-- EXPERIENCE -->
- <section id="experience">
- <div class="section-number">
- 04 / EXPERIENCE
- </div>
-
- <h2 class="section-title">
- Learning by<br>
- doing.
- </h2>
-
- <p class="section-intro">
- My experience has allowed me to work directly with technology,
- people, equipment, and real-world technical problems.
- </p>
-
- <div class="timeline">
- <div class="timeline-item">
- <div class="timeline-date">
- 01/2025 — PRESENT
- </div>
-
- <div class="timeline-content">
- <img src="images/exp-gaia.jpg" alt="GAIA Makerspace Support" class="timeline-img">
- <h3>GAIA Learning Environments</h3>
- <h4>Technology & Makerspace Support · University of Texas at El Paso · El Paso, TX</h4>
- <p>
- Provide technical and makerspace support involving
- 3D printers, digital fabrication equipment, classroom
- technology, AV systems, troubleshooting, cable
- connections, and assisting users with technical
- projects.
- </p>
- </div>
- </div>
-
- <div class="timeline-item">
- <div class="timeline-date">
- 01/2025 — PRESENT
- </div>
-
- <div class="timeline-content">
- <img src="images/exp-techsupport.jpg" alt="UTEP Tech Support" class="timeline-img">
- <h3>UTEP Tech Support</h3>
- <h4>Technical Support · University of Texas at El Paso · El Paso, TX</h4>
- <p>
- Assisted with technical support, computers,
- classroom technology, troubleshooting, and
- technology-related tasks across campus.
- </p>
- </div>
- </div>
-
- <div class="timeline-item">
- <div class="timeline-date">
- CURRENT
- </div>
-
- <div class="timeline-content">
- <img src="images/exp-utep.jpg" alt="UTEP Dual Major" class="timeline-img">
- <h3>Aerospace and Aeronautical Engineering + Artificial Intelligence Engineering</h3>
- <h4>University of Texas at El Paso · Sophomore</h4>
- <p>
- Pursuing a dual major combining Aerospace and Aeronautical Engineering
- and Artificial Intelligence Engineering, with interests in
- aerospace systems, robotics, autonomous systems,
- programming, and advanced technology.
- </p>
- </div>
- </div>
- </div>
- </section>
-
-
- <!-- CERTIFICATIONS -->
- <section id="certifications">
- <div class="section-number">
- 05 / CERTIFICATIONS
- </div>
-
- <h2 class="section-title">
- Skills backed<br>
- by practice.
- </h2>
-
- <p class="section-intro">
- Certifications and training connected to digital manufacturing
- and advanced fabrication.
- </p>
-
- <div class="cert-grid">
- <div class="cert-card">
- <img src="images/cert-bambu.png" alt="Bambu Lab Certification" class="cert-icon-img">
- <h3>Bambu Lab H2D</h3>
- <p>Bambu Lab H2D certification</p>
- </div>
-
- <div class="cert-card">
- <img src="images/cert-fusion.png" alt="Fusion Certification" class="cert-icon-img">
- <h3>Fusion</h3>
- <p>Fusion certification and CAD experience</p>
- </div>
-
- <div class="cert-card">
- <img src="images/cert-cnc.png" alt="CNC Certification" class="cert-icon-img">
- <h3>CNC</h3>
- <p>CNC certification and digital manufacturing experience</p>
- </div>
- </div>
- </section>
-
-
- <!-- LANGUAGES -->
- <section id="languages">
- <div class="section-number">
- 06 / LANGUAGES
- </div>
-
- <h2 class="section-title">
- Communication<br>
- across cultures.
- </h2>
-
- <p class="section-intro">
- My language background allows me to communicate and work across
- different environments and cultures.
- </p>
-
- <div class="languages">
- <div class="language">
- <div class="language-top">
- <span class="language-name">Spanish</span>
- <span class="language-level">Native</span>
- </div>
- <div class="language-bar">
- <div class="language-fill spanish"></div>
- </div>
- </div>
-
- <div class="language">
- <div class="language-top">
- <span class="language-name">English</span>
- <span class="language-level">Advanced</span>
- </div>
- <div class="language-bar">
- <div class="language-fill english"></div>
- </div>
- </div>
-
- <div class="language">
- <div class="language-top">
- <span class="language-name">French</span>
- <span class="language-level">Intermediate</span>
- </div>
- <div class="language-bar">
- <div class="language-fill french"></div>
- </div>
- </div>
-
- <div class="language">
- <div class="language-top">
- <span class="language-name">Japanese</span>
- <span class="language-level">Basic</span>
- </div>
- <div class="language-bar">
- <div class="language-fill japanese"></div>
- </div>
- </div>
- </div>
- </section>
-
-
- <!-- FUTURE DIRECTION -->
- <section class="future">
- <div class="section-number">
- 07 / DIRECTION
- </div>
-
- <div class="future-content">
- <h3>Building toward the future.</h3>
-
- <img src="images/direction-aerospace.jpg" alt="Space & AI Technologies" class="section-banner-img">
-
- <p>
- I want to combine Aerospace Engineering and Artificial
- Intelligence to work on technologies that push the limits
- of what machines can do. My goal is to continue developing
- the engineering, programming, and fabrication skills needed
- to contribute to complex aerospace and autonomous systems.
- </p>
-
- <div class="future-list">
- <div>Aerospace Systems</div>
- <div>Artificial Intelligence</div>
- <div>Space Exploration</div>
- <div>Robotics</div>
- <div>Autonomous Systems</div>
- <div>Launch Vehicles</div>
- <div>Advanced Manufacturing</div>
- <div>Engineering Software</div>
- </div>
- </div>
- </section>
-
-
- <!-- CONTACT -->
- <section id="contact" class="contact">
- <div class="section-number">
- 08 / CONTACT
- </div>
-
- <h2 class="section-title">
- Let's build<br>
- something.
- </h2>
-
- <div class="contact-content">
- <img src="images/contact-banner.jpg" alt="Contact Banner" class="section-banner-img">
-
- <p>
- I'm always interested in engineering projects,
- technology, research, internships, collaborations,
- and opportunities to learn and build.
- </p>
-
- <div class="contact-links">
- <a class="contact-link" href="mailto:jorgeldlrl@gmail.com">EMAIL</a>
- <a class="contact-link" href="tel:9153020330">PHONE</a>
- <a class="contact-link" href="#">LINKEDIN</a>
- <a class="contact-link" href="resume.pdf" target="_blank">RESUME</a>
- </div>
- </div>
- </section>
-
-
- <!-- FOOTER -->
- <footer>
- <div>
- © <span id="year"></span> Jorge De la Riva
- </div>
-
- <div>
- Aerospace and Aerospace Engineering <span>+</span> Artificial Intelligence Engineering
- </div>
- </footer>
-
-
- <!-- JAVASCRIPT -->
- <script>
- function toggleMenu() {
- const menu = document.getElementById("navMenu");
- menu.classList.toggle("active");
- }
-
- document.querySelectorAll("#navMenu a").forEach(link => {
- link.addEventListener("click", () => {
- document.getElementById("navMenu").classList.remove("active");
- });
- });
-
- document.getElementById("year").textContent = new Date().getFullYear();
- </script>
-
+  <!-- NAVIGATION -->
+  <nav>
+    <div class="logo">JORGE<span>.</span></div>
+    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+    <ul id="navMenu">
+      <li><a href="#about">ABOUT</a></li>
+      <li><a href="#projects">PROJECTS</a></li>
+      <li><a href="#skills">SKILLS</a></li>
+      <li><a href="#experience">EXPERIENCE</a></li>
+      <li><a href="#certifications">CERTIFICATIONS</a></li>
+      <li><a href="#languages">LANGUAGES</a></li>
+      <li><a href="#contact">CONTACT</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO SECTION -->
+  <header class="hero">
+    <div class="grid-background"></div>
+    <div class="hero-container">
+      <div class="hero-content">
+        <div class="hero-kicker">
+          AEROSPACE AND AERONAUTICAL ENGINEERING · ARTIFICIAL INTELLIGENCE ENGINEERING · TECHNOLOGY · FABRICATION
+        </div>
+
+        <h1>Turning ideas<br>into <span>real systems.</span></h1>
+
+        <p class="hero-description">
+          <span class="first-letter">I</span>'m Jorge De la Riva, a dual-major student at The University of Texas at El Paso studying <strong>Aerospace and Aeronautical Engineering</strong> and <strong>Artificial Intelligence Engineering</strong>. I'm passionate about aerospace technology, robotics, autonomous systems, programming, digital fabrication, and building things that solve real problems.
+        </p>
+
+        <div class="hero-buttons">
+          <a href="#projects" class="btn btn-primary">VIEW MY PROJECTS</a>
+          <a href="#contact" class="btn btn-secondary">CONTACT ME</a>
+        </div>
+
+        <div class="hero-tags">
+          <div class="tag">AEROSPACE</div>
+          <div class="tag">ARTIFICIAL INTELLIGENCE</div>
+          <div class="tag">ROBOTICS</div>
+          <div class="tag">3D PRINTING</div>
+          <div class="tag">PROGRAMMING</div>
+          <div class="tag">GAIA</div>
+        </div>
+      </div>
+
+      <div class="hero-image-wrapper">
+        <img src="images/profile.jpg" alt="Jorge De la Riva">
+      </div>
+    </div>
+  </header>
+
+  <!-- ABOUT SECTION -->
+  <section id="about">
+    <div class="section-number">01 / ABOUT ME</div>
+    <h2 class="section-title">Engineering with<br>curiosity.</h2>
+    <img src="images/about-utep.jpg" alt="UTEP Engineering Lab" class="section-banner-img">
+
+    <div class="about-grid">
+      <div class="about-text">
+        <p>I am a student at <strong>The University of Texas at El Paso (UTEP)</strong> pursuing a dual major in <strong>Aerospace and Aeronautical Engineering and Artificial Intelligence Engineering</strong>.</p>
+        <p>My interests sit at the intersection of engineering, technology, programming, artificial intelligence, robotics, and advanced manufacturing.</p>
+        <p>I enjoy taking an idea and figuring out how to turn it into something tangible. Whether that means writing code, designing a part, troubleshooting a technical system, working with a 3D printer, or analyzing an engineering problem, I like learning by building.</p>
+        <p>My long-term interests include <strong>space exploration, aerospace systems, robotics, autonomous systems, launch vehicles, and advanced engineering technologies.</strong></p>
+      </div>
+
+      <div class="profile-card">
+        <h3>QUICK PROFILE</h3>
+        <div class="profile-row">
+          <span class="profile-label">University</span>
+          <span class="profile-value">University of Texas at El Paso (UTEP)</span>
+        </div>
+        <div class="profile-row">
+          <span class="profile-label">Major</span>
+          <span class="profile-value">Aerospace & Aeronautical Engineering</span>
+        </div>
+        <div class="profile-row">
+          <span class="profile-label">Major</span>
+          <span class="profile-value">Artificial Intelligence Engineering</span>
+        </div>
+        <div class="profile-row">
+          <span class="profile-label">Classification</span>
+          <span class="profile-value">Sophomore</span>
+        </div>
+        <div class="profile-row">
+          <span class="profile-label">GPA</span>
+          <span class="profile-value">3.76</span>
+        </div>
+        <div class="profile-row">
+          <span class="profile-label">Languages</span>
+          <span class="profile-value">4</span>
+        </div>
+        <div class="profile-row">
+          <span class="profile-label">Focus</span>
+          <span class="profile-value">Aerospace + AI</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS SECTION -->
+  <section id="projects">
+    <div class="section-number">02 / PROJECTS</div>
+    <h2 class="section-title">Things I've<br>built.</h2>
+    <p class="section-intro">
+      My projects combine engineering analysis, programming, fabrication, design, and problem solving. Each project represents another step in learning how to turn concepts into working systems.
+    </p>
+
+    <div class="projects-grid">
+      <div class="project-card">
+        <div class="card-image"><img src="images/project-fea.jpg" alt="Aerospace Materials Analysis"></div>
+        <div class="project-card-body">
+          <div class="project-number">PROJECT 01</div>
+          <h3>Aerospace Materials Analysis</h3>
+          <p>Engineering work involving aerospace materials, finite element analysis, thermal analysis, symmetry, and fracture testing. The work included analyzing specimens made from aluminum, brass, and steel.</p>
+          <div class="project-tech">
+            <span>FEA</span>
+            <span>THERMAL ANALYSIS</span>
+            <span>MATERIALS</span>
+            <span>AEROSPACE</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="card-image"><img src="images/project-3dprint.jpg" alt="3D Printing & Fabrication"></div>
+        <div class="project-card-body">
+          <div class="project-number">PROJECT 02</div>
+          <h3>3D Printing & Fabrication</h3>
+          <p>Hands-on experience designing and producing physical objects using additive manufacturing. Experience includes preparing STL files, generating G-code, troubleshooting prints, and operating Bambu Lab equipment.</p>
+          <div class="project-tech">
+            <span>3D PRINTING</span>
+            <span>BAMBU LAB</span>
+            <span>G-CODE</span>
+            <span>STL</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="card-image"><img src="images/project-cnc.jpg" alt="CAD, CNC & Digital Manufacturing"></div>
+        <div class="project-card-body">
+          <div class="project-number">PROJECT 03</div>
+          <h3>CAD, CNC & Digital Manufacturing</h3>
+          <p>Digital manufacturing projects involving Fusion, CNC workflows, laser engraving, and physical prototyping. The goal is to connect digital design with real-world manufacturing.</p>
+          <div class="project-tech">
+            <span>FUSION</span>
+            <span>CNC</span>
+            <span>CAD</span>
+            <span>FABRICATION</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="card-image"><img src="images/project-pokeminer.jpg" alt="Poke-Miner Game"></div>
+        <div class="project-card-body">
+          <div class="project-number">PROJECT 04</div>
+          <h3>Poke-Miner</h3>
+          <p>A Java-based game and simulation project involving Pokémon data, trainers, wild Pokémon, maps, catching mechanics, battle simulation, and evolution data.</p>
+          <div class="project-tech">
+            <span>JAVA</span>
+            <span>GAME LOGIC</span>
+            <span>ARRAYS</span>
+            <span>SIMULATION</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="card-image"><img src="images/project-minesweeper.jpg" alt="Minesweeper & 2048"></div>
+        <div class="project-card-body">
+          <div class="project-number">PROJECT 05</div>
+          <h3>Minesweeper & 2048</h3>
+          <p>Console-based Java projects developed to practice programming logic, arrays, user input, movement systems, game mechanics, and number manipulation.</p>
+          <div class="project-tech">
+            <span>JAVA</span>
+            <span>ALGORITHMS</span>
+            <span>ARRAYS</span>
+            <span>GAME DEVELOPMENT</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="card-image"><img src="images/project-flowfree.jpg" alt="Flow Free Pygame"></div>
+        <div class="project-card-body">
+          <div class="project-number">PROJECT 06</div>
+          <h3>Flow Free — Pygame</h3>
+          <p>A Python/Pygame project focused on grid-based gameplay, colored paths, level design, interface development, and interactive game mechanics.</p>
+          <div class="project-tech">
+            <span>PYTHON</span>
+            <span>PYGAME</span>
+            <span>UI</span>
+            <span>GAME LOGIC</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS SECTION -->
+  <section id="skills">
+    <div class="section-number">03 / SKILLS</div>
+    <h2 class="section-title">What I<br>work with.</h2>
+    <p class="section-intro">
+      A combination of engineering knowledge, programming, manufacturing, technical support, and creative technology.
+    </p>
+
+    <div class="skills-grid">
+      <div class="skill-card">
+        <img src="images/icon-aerospace.png" alt="Aerospace" class="skill-icon-img">
+        <h3>Aerospace & Engineering</h3>
+        <p>Aerospace engineering fundamentals, materials, finite element analysis, thermal analysis, engineering problem solving, and technical documentation.</p>
+      </div>
+
+      <div class="skill-card">
+        <img src="images/icon-ai.png" alt="Artificial Intelligence" class="skill-icon-img">
+        <h3>Artificial Intelligence</h3>
+        <p>Artificial intelligence foundations, computational problem solving, programming, algorithms, and interest in machine learning and autonomous systems.</p>
+      </div>
+
+      <div class="skill-card">
+        <img src="images/icon-code.png" alt="Programming" class="skill-icon-img">
+        <h3>Programming</h3>
+        <p>Java, Python, Pygame, arrays, algorithms, game logic, simulations, object-oriented programming concepts, and problem solving.</p>
+      </div>
+
+      <div class="skill-card">
+        <img src="images/icon-fab.png" alt="Digital Fabrication" class="skill-icon-img">
+        <h3>Digital Fabrication</h3>
+        <p>3D printing, Bambu Lab systems, STL preparation, G-code, Fusion, CNC, laser engraving, and prototyping.</p>
+      </div>
+
+      <div class="skill-card">
+        <img src="images/icon-support.png" alt="Technical Support" class="skill-icon-img">
+        <h3>Technical Support</h3>
+        <p>PC troubleshooting, AV systems, Extron, GVE, Toolbelt, GUI systems, GCP, cable connections, classroom technology, and basic system programming.</p>
+      </div>
+
+      <div class="skill-card">
+        <img src="images/icon-creative.png" alt="Creative Technology" class="skill-icon-img">
+        <h3>Creative Technology</h3>
+        <p>GIMP, Canva, Clipchamp, digital design, 3D modeling, prototyping, and transforming concepts into physical or digital projects.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE SECTION -->
+  <section id="experience">
+    <div class="section-number">04 / EXPERIENCE</div>
+    <h2 class="section-title">Learning by<br>doing.</h2>
+    <p class="section-intro">
+      My experience has allowed me to work directly with technology, people, equipment, and real-world technical problems.
+    </p>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-date">01/2025 — PRESENT</div>
+        <div class="timeline-content">
+          <img src="images/exp-gaia.jpg" alt="GAIA Makerspace Support" class="timeline-img">
+          <h3>GAIA Learning Environments</h3>
+          <h4>Technology & Makerspace Support · University of Texas at El Paso · El Paso, TX</h4>
+          <p>Provide technical and makerspace support involving 3D printers, digital fabrication equipment, classroom technology, AV systems, troubleshooting, cable connections, and assisting users with technical projects.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">01/2025 — PRESENT</div>
+        <div class="timeline-content">
+          <img src="images/exp-techsupport.jpg" alt="UTEP Tech Support" class="timeline-img">
+          <h3>UTEP Tech Support</h3>
+          <h4>Technical Support · University of Texas at El Paso · El Paso, TX</h4>
+          <p>Assisted with technical support, computers, classroom technology, troubleshooting, and technology-related tasks across campus.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">CURRENT</div>
+        <div class="timeline-content">
+          <img src="images/exp-utep.jpg" alt="UTEP Dual Major" class="timeline-img">
+          <h3>Aerospace and Aeronautical Engineering + Artificial Intelligence Engineering</h3>
+          <h4>University of Texas at El Paso · Sophomore</h4>
+          <p>Pursuing a dual major combining Aerospace and Aeronautical Engineering and Artificial Intelligence Engineering, with interests in aerospace systems, robotics, autonomous systems, programming, and advanced technology.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CERTIFICATIONS SECTION -->
+  <section id="certifications">
+    <div class="section-number">05 / CERTIFICATIONS</div>
+    <h2 class="section-title">Skills backed<br>by practice.</h2>
+    <p class="section-intro">
+      Certifications and training connected to digital manufacturing and advanced fabrication.
+    </p>
+
+    <div class="cert-grid">
+      <div class="cert-card">
+        <img src="images/cert-bambu.png" alt="Bambu Lab Certification" class="cert-icon-img">
+        <h3>Bambu Lab H2D</h3>
+        <p>Bambu Lab H2D certification</p>
+      </div>
+
+      <div class="cert-card">
+        <img src="images/cert-fusion.png" alt="Fusion Certification" class="cert-icon-img">
+        <h3>Fusion</h3>
+        <p>Fusion certification and CAD experience</p>
+      </div>
+
+      <div class="cert-card">
+        <img src="images/cert-cnc.png" alt="CNC Certification" class="cert-icon-img">
+        <h3>CNC</h3>
+        <p>CNC certification and digital manufacturing experience</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- LANGUAGES SECTION -->
+  <section id="languages">
+    <div class="section-number">06 / LANGUAGES</div>
+    <h2 class="section-title">Communication<br>across cultures.</h2>
+    <p class="section-intro">
+      My language background allows me to communicate and work across different environments and cultures.
+    </p>
+
+    <div class="languages">
+      <div class="language">
+        <div class="language-top">
+          <span class="language-name">Spanish</span>
+          <span class="language-level">Native</span>
+        </div>
+        <div class="language-bar">
+          <div class="language-fill spanish"></div>
+        </div>
+      </div>
+
+      <div class="language">
+        <div class="language-top">
+          <span class="language-name">English</span>
+          <span class="language-level">Advanced</span>
+        </div>
+        <div class="language-bar">
+          <div class="language-fill english"></div>
+        </div>
+      </div>
+
+      <div class="language">
+        <div class="language-top">
+          <span class="language-name">French</span>
+          <span class="language-level">Intermediate</span>
+        </div>
+        <div class="language-bar">
+          <div class="language-fill french"></div>
+        </div>
+      </div>
+
+      <div class="language">
+        <div class="language-top">
+          <span class="language-name">Japanese</span>
+          <span class="language-level">Basic</span>
+        </div>
+        <div class="language-bar">
+          <div class="language-fill japanese"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FUTURE DIRECTION SECTION -->
+  <section class="future">
+    <div class="section-number">07 / DIRECTION</div>
+    <div class="future-content">
+      <h3>Building toward the future.</h3>
+      <img src="images/direction-aerospace.jpg" alt="Space & AI Technologies" class="section-banner-img">
+      
+      <p>
+        I want to combine Aerospace Engineering and Artificial Intelligence to work on technologies that push the limits of what machines can do. My goal is to continue developing the engineering, programming, and fabrication skills needed to contribute to complex aerospace and autonomous systems.
+      </p>
+
+      <div class="future-list">
+        <div>Aerospace Systems</div>
+        <div>Artificial Intelligence</div>
+        <div>Space Exploration</div>
+        <div>Robotics</div>
+        <div>Autonomous Systems</div>
+        <div>Launch Vehicles</div>
+        <div>Advanced Manufacturing</div>
+        <div>Engineering Software</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT SECTION -->
+  <section id="contact" class="contact">
+    <div class="section-number">08 / CONTACT</div>
+    <h2 class="section-title">Let's build<br>something.</h2>
+
+    <div class="contact-content">
+      <img src="images/contact-banner.jpg" alt="Contact Banner" class="section-banner-img">
+      <p>
+        I'm always interested in engineering projects, technology, research, internships, collaborations, and opportunities to learn and build.
+      </p>
+
+      <div class="contact-links">
+        <a class="contact-link" href="mailto:jorgeldlrl@gmail.com">EMAIL</a>
+        <a class="contact-link" href="tel:9153020330">PHONE</a>
+        <a class="contact-link" href="#">LINKEDIN</a>
+        <a class="contact-link" href="resume.pdf" target="_blank">RESUME</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div>
+      © <span id="year"></span> Jorge De la Riva
+    </div>
+    <div>
+      Aerospace and Aerospace Engineering <span>+</span> Artificial Intelligence Engineering
+    </div>
+  </footer>
+
+  <!-- JAVASCRIPT -->
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById("navMenu");
+      menu.classList.toggle("active");
+    }
+
+    document.querySelectorAll("#navMenu a").forEach(link => {
+      link.addEventListener("click", () => {
+        document.getElementById("navMenu").classList.remove("active");
+      });
+    });
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
